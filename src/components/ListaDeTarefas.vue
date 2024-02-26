@@ -1,11 +1,24 @@
+<script setup>
+const props = defineProps(['tarefas'])
+</script>
+
 <template>
-    <ul class="list-group mt-4">
-        <li class="list-group-item" v-for="tarefa in getTarefasFiltradas()">
+    <ul class="list-group mt-4" v-if="props.tarefas == 0">
+        <h2>Não existe tarefas pendentes</h2>
+    </ul>
+    <ul class="list-group mt-4" v-else="props.tarefas > 0">
+        <li class="list-group-item" v-for="tarefa in props.tarefas">
             <input @change="evento => tarefa.finalizada = evento.target.checked" :checked="tarefa.finalizada"
                 :id="tarefa.titulo" type="checkbox">
-            <label :class="{ done: tarefa.finalizada === true }" class="ms-3" :for="tarefa.titulo">
+            <label :class="{ done: tarefa.finalizada }" class="ms-3" :for="tarefa.titulo">
                 {{ tarefa.titulo }}
             </label>
         </li>
     </ul>
 </template>
+
+<style scoped>
+.done {
+    text-decoration: line-through;
+}
+</style>
